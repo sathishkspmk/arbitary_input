@@ -45,7 +45,7 @@ int main(){
             exit(1);
         }
 
-        fputs(pStr, fptr); // writing data which ever user is entrering any type of value
+        fputs(pStr, fptr); // writing data which ever user is entering any type of value
         fclose(fptr);
 	//free it 
 	free(pStr);
