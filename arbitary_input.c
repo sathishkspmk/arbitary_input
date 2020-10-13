@@ -5,42 +5,51 @@
 
 int main(){
 
-    // Declare local variable
-    char inp_value[MAX_INPUT] = "";
-    int number;
-    double d_value;
-    char str_val[MAX_INPUT] ="";
+    //fgets(inp_value, MAX_INPUT, stdin);
+    
+    unsigned int len_max = 128;
+    unsigned int current_size = 0;
+    
+    char *pStr = malloc(len_max);
+    current_size = len_max;
 
-    double val =1e-12;
+    printf("\nEnter a very very very long String value:");
 
-    fgets(inp_value, MAX_INPUT, stdin);
-    // Check for integers.
-    if (sscanf(inp_value, "%lf", &d_value) == 1)
+    if(pStr != NULL)
     {
-        number = (int)d_value;
-        if (fabs(d_value - number) / d_value > val)
-            printf("It is a floating point\n");
-        else
-            printf("It is an integer\n");
-    }
-	// Check for string
-    else if (sscanf(inp_value, "%s", str_val) == 1)
-        printf("The input is a string\n");
+	int c = EOF;
+	unsigned int i =0;
+        //accept user input until hit enter or end of file
+	while (( c = getchar() ) != '\n' && c != EOF)
+	{
+		pStr[i++]=(char)c;
 
-    else // No match.
-        printf("input not found in any of the data types\n");
+		//if i reached maximize size then realloc size
+		if(i == current_size)
+		{
+                        current_size = i+len_max;
+			pStr = realloc(pStr, current_size);
+		}
+	}
 
-    FILE *fptr;
-    fptr = fopen("C:\program.txt","w");
+	pStr[i] = '\0';
 
-    if(fptr == NULL)
-    {
-       printf("Error!");
-       exit(1);
-    }
+        printf("\nLong String value:%s \n\n",pStr);
+        	
+        FILE *fptr;
+        fptr = fopen("C:\program.txt","w");
 
-    fputs(inp_value, fptr); // writing data which ever user is entrering any type of value
-    fclose(fptr);
+        if(fptr == NULL)
+        {
+            printf("Error!");
+            exit(1);
+        }
+
+        fputs(pStr, fptr); // writing data which ever user is entrering any type of value
+        fclose(fptr);
+	//free it 
+	free(pStr);
+	pStr = NULL;
 return 0;
 }
 
