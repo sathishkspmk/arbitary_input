@@ -50,6 +50,7 @@ int main(){
 	//free it 
 	free(pStr);
 	pStr = NULL;
+    }
 return 0;
 }
 
